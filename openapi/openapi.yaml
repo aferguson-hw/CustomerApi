@@ -1,0 +1,41 @@
+openapi: 3.0.1
+info:
+  title: CustomerApi
+  version: v1
+paths:
+  /Customer:
+    get:
+      tags:
+        - Customer
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+        - Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCustomerDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/NewCustomerDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/NewCustomerDto'
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    NewCustomerDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+      additionalProperties: false
