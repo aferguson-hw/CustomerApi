@@ -1,5 +1,6 @@
 ﻿using CustomerApi.DTOs;
 using CustomerApi.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -25,13 +26,42 @@ namespace CustomerApi.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Fetches all Customers
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        /// GET /Customer/GetCustomers
+        /// </remarks>
+        /// <response code="200">Returns a collection of all customers</response>
+        /// <returns>A list of all customers</returns>
         [HttpGet]
+        [Route("GetCustomers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
             return Ok(_customers);
         }
 
+        /// <summary>
+        /// Creates a new customer
+        /// </summary>
+        /// <remarks>
+        /// Sample request: 
+        /// 
+        /// POST /Customer/CreateNewCustomer
+        /// {
+        ///     "firstName": "Old",
+        ///     "lastName": "Greg"
+        /// }
+        /// </remarks>
+        /// <response code="200">Returns a collection of all customers including the newly created customer</response>
+        /// <param name="newCustomer">The customer first and last name</param>
+        /// <returns>A list of all customers</returns>
         [HttpPost]
+        [Route("CreateNewCustomer")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateNewCustomer([FromBody] NewCustomerDto newCustomer)
         {
             var customerId = _customers.Max(c => c.Id) + 1;
