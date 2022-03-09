@@ -8,4 +8,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="openapi\" />
+  </ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="dotnet swagger tofile --output .\openapi\openapi.yaml --yaml $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
+		<Exec Command="dotnet swagger tofile --output .\openapi\openapi.json $(OutputPath)$(AssemblyName).dll v1" WorkingDirectory="$(ProjectDir)" />
+	</Target>
+
 </Project>
